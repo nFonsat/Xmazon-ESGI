@@ -2,7 +2,7 @@
 
 using Xamarin.Forms;
 
-namespace Xmazon-Project
+namespace XmazonProject
 {
 	public class App : Application
 	{
