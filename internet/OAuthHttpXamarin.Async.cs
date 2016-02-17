@@ -1,16 +1,13 @@
 ﻿using System;
 using System.Net;
 using System.IO;
-using System.Collections.Specialized;
+
 
 namespace XmazonProject.Internet
 {
-	public partial class HttpXamarin
+	public partial class OAuthHttpXamarin : HttpXamarin
 	{
-		protected Action<HttpWebRequestCallbackState> _ResponseCallback;
-		protected object _State;
-
-		protected virtual void BeginGetResponseCallback(IAsyncResult asyncResult)
+		protected override void BeginGetResponseCallback(IAsyncResult asyncResult)
 		{
 			WebResponse webResponse = null;
 			Stream responseStream = null;
@@ -31,10 +28,17 @@ namespace XmazonProject.Internet
 			}
 			catch (WebException ex)
 			{
-				if (asyncState != null)
-					asyncState.ResponseCallback(new HttpWebRequestCallbackState(ex));
-				else
-					throw;
+				HttpWebResponse response = (HttpWebResponse)ex.Response;
+				if (response.StatusCode == HttpStatusCode.Unauthorized) {
+					AccessToken token = OAuth2Manager.Instance.OAuth2RefreshToken (Context);
+					if (token != null) {
+						SetCredentialHeader ();
+						base.ExecuteAsync (_ResponseCallback, _State);
+					}
+				} else {
+					Console.WriteLine (GetResponseText (response.GetResponseStream ()));
+					throw ex;
+				}
 			}
 			finally
 			{
@@ -45,7 +49,7 @@ namespace XmazonProject.Internet
 			}
 		}
 
-		protected virtual void BeginGetRequestStreamCallback(IAsyncResult asyncResult)
+		protected override void BeginGetRequestStreamCallback(IAsyncResult asyncResult)
 		{
 			Stream requestStream = null;
 			HttpWebRequestAsyncState asyncState = null;
@@ -65,48 +69,22 @@ namespace XmazonProject.Internet
 			}
 			catch (WebException ex)
 			{
-				if (asyncState != null)
-					asyncState.ResponseCallback(new HttpWebRequestCallbackState(ex));
-				else
-					throw;
+				HttpWebResponse response = (HttpWebResponse)ex.Response;
+				if (response.StatusCode == HttpStatusCode.Unauthorized) {
+					AccessToken token = OAuth2Manager.Instance.OAuth2RefreshToken (Context);
+					if (token != null) {
+						SetCredentialHeader ();
+						base.ExecuteAsync (_ResponseCallback, _State);
+					}
+				} else {
+					Console.WriteLine (GetResponseText (response.GetResponseStream ()));
+					throw ex;
+				}
 			}
 			finally
 			{
 				if (requestStream != null)
 					requestStream.Close();
-			}
-		}
-
-		public void ExecuteAsync (
-			Action<HttpWebRequestCallbackState> responseCallback, 
-			object state = null)
-		{
-			_ResponseCallback = responseCallback;
-			_State = state;
-			
-			_Request = CreateHttpWebRequest(Url, Method, ContentType);
-
-			if ((Method.Equals ("POST") || Method.Equals ("PUT") || Method.Equals ("DELETE")) && PostParameters != null) {
-				byte[] requestBytes = GetRequestBytes (PostParameters);
-				_Request.ContentLength = requestBytes.Length;
-
-				_Request.BeginGetRequestStream (BeginGetRequestStreamCallback,
-					new HttpWebRequestAsyncState () {
-						RequestBytes = requestBytes,
-						HttpWebRequest = _Request,
-						ResponseCallback = responseCallback,  
-						State = state
-					}
-				);
-			} else {
-				_Request.BeginGetResponse(BeginGetResponseCallback,
-					new HttpWebRequestAsyncState()
-					{
-						HttpWebRequest = _Request,
-						ResponseCallback = responseCallback,
-						State = state
-					}
-				);
 			}
 		}
 	}

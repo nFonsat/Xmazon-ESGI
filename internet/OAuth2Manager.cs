@@ -6,21 +6,18 @@ using Newtonsoft.Json;
 
 namespace XmazonProject.Internet
 {
-	public sealed class OAuth2Manager
+	public enum OAuthContext {
+		UserContext,
+		AppContext
+	}
+
+	public sealed class OAuth2Manager 
 	{
-		public enum OAuthContext {
-			UserContext,
-			AppContext
-		}
+		public static readonly string ACCESS_TOKEN_APP 	= "ACCESS_TOKEN_APP";
+		public static readonly string REFRESH_TOKEN_APP = "REFRESH_TOKEN_APP";
+		public static readonly string ACCESS_TOKEN_USER = "ACCESS_TOKEN_USER";
+		public static readonly string REFRESH_TOKEN_USER = "REFRESH_TOKEN_USER";
 		
-		public const string ACCESS_TOKEN_APP 	= "ACCESS_TOKEN_APP";
-
-		public const string REFRESH_TOKEN_APP 	= "REFRESH_TOKEN_APP";
-
-		public const string ACCESS_TOKEN_USER 	= "ACCESS_TOKEN_USER";
-
-		public const string REFRESH_TOKEN_USER 	= "REFRESH_TOKEN_USER";
-
 		public const string OAUTH_URL 			= "http://xmazon.appspaces.fr/oauth/token";
 
 		public const string CLIENT_ID 			= "455c23ee-8604-49bd-81e5-1dad664d06da";
@@ -60,12 +57,11 @@ namespace XmazonProject.Internet
 			clientCredentialCollection.Set ("client_id", CLIENT_ID);
 			clientCredentialCollection.Set ("client_secret", CLIENT_SECRET);
 
-			HttpXamarin.PostAsync (
-				OAUTH_URL,
-				clientCredentialCollection,
-				responseCallback,
-				"application/x-www-form-urlencoded"
-			);
+			HttpXamarin http = new HttpXamarin (OAUTH_URL, 
+				"POST", 
+				"application/x-www-form-urlencoded", 
+				clientCredentialCollection);
+			http.ExecuteAsync (responseCallback);
 		}
 
 		public void OAuth2Password (string username, string password)
@@ -92,31 +88,58 @@ namespace XmazonProject.Internet
 			passwordCollection.Set ("username", username);
 			passwordCollection.Set ("password", password);
 
-			HttpXamarin.PostAsync (
-				OAUTH_URL,
-				passwordCollection,
-				responseCallback,
-				"application/x-www-form-urlencoded"
-			);
+			HttpXamarin http = new HttpXamarin (OAUTH_URL, 
+				"POST", 
+				"application/x-www-form-urlencoded", 
+				passwordCollection);
+			http.ExecuteAsync (responseCallback);
 		}
 
-		public AccessToken OAuth2RefreshToken (string refreshToken, OAuthContext context)
+		public AccessToken OAuth2RefreshToken (OAuthContext context)
 		{
-			NameValueCollection refreshTokenCollection = new NameValueCollection ();
-			refreshTokenCollection.Set ("grant_type", "refresh_token");
-			refreshTokenCollection.Set ("client_id", CLIENT_ID);
-			refreshTokenCollection.Set ("client_secret", CLIENT_SECRET);
-			refreshTokenCollection.Set ("refresh_token", refreshToken);
+			AccessToken token = null;
+			string refreshToken = GetRefreshToken (context);
 
-			HttpWebResponse webResponse = HttpXamarin.PostSync (OAUTH_URL, 
-				refreshTokenCollection, 
-				"application/x-www-form-urlencoded");
+			if (refreshToken != null) {
+				NameValueCollection refreshTokenCollection = new NameValueCollection ();
+				refreshTokenCollection.Set ("grant_type", "refresh_token");
+				refreshTokenCollection.Set ("client_id", CLIENT_ID);
+				refreshTokenCollection.Set ("client_secret", CLIENT_SECRET);
+				refreshTokenCollection.Set ("refresh_token", refreshToken);
 
-			string accessTokenJson = HttpXamarin.GetResponseText (webResponse.GetResponseStream ());
-			AccessToken token = JsonConvert.DeserializeObject<AccessToken>(accessTokenJson);
-			StorageToken (token, OAuthContext.AppContext);
+				HttpXamarin http = new HttpXamarin (OAUTH_URL, 
+					"POST", 
+					"application/x-www-form-urlencoded", 
+					refreshTokenCollection);
+				HttpWebResponse webResponse = http.ExecuteSync ();
+
+				string accessTokenJson = HttpXamarin.GetResponseText (webResponse.GetResponseStream ());
+				token = JsonConvert.DeserializeObject<AccessToken>(accessTokenJson);
+				StorageToken (token, OAuthContext.AppContext);
+			}
+
+
 
 			return token;
+		}
+
+		private string GetRefreshToken (OAuthContext context)
+		{
+			string refreshToken = null;
+			
+			switch (context) {
+			case OAuthContext.AppContext:
+				refreshToken = (Application.Current.Properties.ContainsKey (REFRESH_TOKEN_APP)) ?
+					(string) Application.Current.Properties [REFRESH_TOKEN_APP] : null;
+				break;
+
+			case OAuthContext.UserContext:
+				refreshToken = (Application.Current.Properties.ContainsKey (REFRESH_TOKEN_USER)) ?
+					(string) Application.Current.Properties [REFRESH_TOKEN_USER] : null;
+				break;
+			}
+
+			return refreshToken;
 		}
 
 		private void StorageToken (AccessToken token, OAuthContext context)

@@ -9,11 +9,40 @@ namespace XmazonProject.Internet
 {
 	public partial class HttpXamarin
 	{
-		private HttpXamarin ()
+		public string Url  { get; private set; }
+		public string Method  { get; private set; }
+		public string ContentType  { get; private set; }
+		public NameValueCollection PostParameters  { get; private set; }
+		protected HttpWebRequest _Request;
+
+
+		protected HttpXamarin () 
 		{
 		}
 
-		protected static HttpWebRequest CreateHttpWebRequest(string url, string httpMethod, string contentType)
+		public HttpXamarin (string url, string httpMethod)
+		{
+			Url = url;
+			Method = httpMethod;
+			ContentType = "application/x-www-form-urlencoded";
+		}
+
+		public HttpXamarin (string url, string httpMethod, string contentType)
+		{
+			Url = url;
+			Method = httpMethod;
+			ContentType = contentType;
+		}
+
+		public HttpXamarin (string url, string httpMethod, string contentType, NameValueCollection postParameters)
+		{
+			Url = url;
+			Method = httpMethod;
+			ContentType = contentType;
+			PostParameters = postParameters;
+		}
+
+		protected virtual HttpWebRequest CreateHttpWebRequest(string url, string httpMethod, string contentType)
 		{
 			HttpWebRequest httpWebRequest = (HttpWebRequest)WebRequest.Create(url);
 
@@ -23,7 +52,7 @@ namespace XmazonProject.Internet
 			return httpWebRequest;
 		}
 
-		protected static byte[] GetRequestBytes(NameValueCollection postParameters)
+		protected byte[] GetRequestBytes(NameValueCollection postParameters)
 		{
 			if (postParameters == null || postParameters.Count == 0) {
 				return new byte[0];
