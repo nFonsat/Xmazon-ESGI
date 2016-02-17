@@ -15,6 +15,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)internet\HttpWebRequestAsyncState.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)internet\HttpWebRequestCallbackState.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)internet\HttpXamarin.Sync.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)internet\OAuth2Manager.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="$(MSBuildThisFileDirectory)internet\" />
