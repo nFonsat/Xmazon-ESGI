@@ -26,6 +26,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)webclients\CategoryWebService.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)webclients\OrderWebService.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)webclients\ProductWebService.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)webclients\StoreWebService.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="$(MSBuildThisFileDirectory)internet\" />
