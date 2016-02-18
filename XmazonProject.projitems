@@ -22,6 +22,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)internet\OAuthHttpXamarin.Sync.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)webclients\AuthWebService.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)webclients\BaseWebService.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)webclients\CartWebService.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="$(MSBuildThisFileDirectory)internet\" />
