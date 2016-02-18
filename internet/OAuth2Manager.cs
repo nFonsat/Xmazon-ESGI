@@ -38,7 +38,7 @@ namespace XmazonProject.Internet
 
 		public AccessToken OAuth2ClientCredentials ()
 		{
-			AccessToken token;
+			AccessToken token = null;
 			NameValueCollection clientCredentialCollection = new NameValueCollection ();
 			clientCredentialCollection.Set ("grant_type", "client_credentials");
 			clientCredentialCollection.Set ("client_id", CLIENT_ID);
