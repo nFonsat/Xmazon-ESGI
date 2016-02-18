@@ -170,6 +170,8 @@ namespace XmazonProject.Internet
 				Application.Current.Properties [REFRESH_TOKEN_USER] = token.refresh_token;
 				break;
 			}
+
+			App.Current.SavePropertiesAsync ();
 		}
 
 		private void DeleteToken (OAuthContext context)
@@ -185,6 +187,8 @@ namespace XmazonProject.Internet
 				Application.Current.Properties.Remove (REFRESH_TOKEN_USER);
 				break;
 			}
+
+			App.Current.SavePropertiesAsync ();
 		}
 	}
 }
