@@ -1,13 +1,12 @@
 ﻿using System;
 using System.Net;
-using System.Collections.Specialized;
 using System.IO;
 
 namespace XmazonProject.Internet
 {
-	public partial class HttpXamarin
+	public partial class OAuthHttpXamarin : HttpXamarin
 	{
-		public virtual HttpWebResponse ExecuteSync ()
+		public override HttpWebResponse ExecuteSync ()
 		{
 			HttpWebResponse webResponse = null;
 			Stream requestStream = null;
@@ -30,6 +29,15 @@ namespace XmazonProject.Internet
 			catch (WebException exception) 
 			{
 				webResponse = (HttpWebResponse)exception.Response;
+				if (webResponse.StatusCode == HttpStatusCode.Unauthorized) {
+					AccessToken token = OAuth2Manager.Instance.OAuth2RefreshToken (Context);
+					if (token != null) {
+						SetCredentialHeader ();
+						webResponse = base.ExecuteSync ();
+					}
+				} else {
+					Console.WriteLine (GetResponseText (webResponse.GetResponseStream ()));
+				}
 			}
 			finally
 			{

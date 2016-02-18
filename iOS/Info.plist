@@ -3,9 +3,9 @@
 <plist version="1.0">
 <dict>
 	<key>CFBundleDisplayName</key>
-	<string>Xmazon-Project</string>
+	<string>Xmazon</string>
 	<key>CFBundleIdentifier</key>
-	<string>com.fonsat-nicolas.xmazon-project</string>
+	<string>fr.esgi.iam.xmazon</string>
 	<key>CFBundleShortVersionString</key>
 	<string>1.0</string>
 	<key>CFBundleVersion</key>
