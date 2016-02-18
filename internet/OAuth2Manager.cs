@@ -36,8 +36,9 @@ namespace XmazonProject.Internet
 			}
 		}
 
-		public void OAuth2ClientCredentials ()
+		public AccessToken OAuth2ClientCredentials ()
 		{
+			AccessToken token;
 			NameValueCollection clientCredentialCollection = new NameValueCollection ();
 			clientCredentialCollection.Set ("grant_type", "client_credentials");
 			clientCredentialCollection.Set ("client_id", CLIENT_ID);
@@ -52,14 +53,15 @@ namespace XmazonProject.Internet
 			string responseString = HttpXamarin.GetResponseText (httpResponse.GetResponseStream ());
 
 			if (httpResponse.StatusCode == HttpStatusCode.OK) {
-					string accessTokenAppJson = responseString;
-				AccessToken token = JsonConvert.DeserializeObject<AccessToken>(accessTokenAppJson);
+				string accessTokenAppJson = responseString;
+				token = JsonConvert.DeserializeObject<AccessToken>(accessTokenAppJson);
 				StorageToken (token, OAuthContext.AppContext);
-				Console.WriteLine ("OAuth2ClientCredentials : " + token.access_token);
 			} else {
 				DeleteToken (OAuthContext.AppContext);
 				Console.WriteLine ("OAuth2ClientCredentials Error : " + responseString);
 			}
+
+			return token;
 		}
 
 		public void OAuth2Password (string username, string password)
