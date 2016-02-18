@@ -1,6 +1,7 @@
 ﻿using System;
 
 using Xamarin.Forms;
+using XmazonProject.Internet;
 
 namespace XmazonProject
 {
@@ -8,6 +9,11 @@ namespace XmazonProject
 	{
 		public App ()
 		{
+			OAuth2Manager manager = OAuth2Manager.Instance;
+			if (!manager.ContainsAppAccessToken ()) {
+				OAuth2Manager.Instance.OAuth2ClientCredentials ();
+			}
+			
 			// The root page of your application
 			MainPage = new ContentPage {
 				Content = new StackLayout {
