@@ -87,6 +87,41 @@ namespace XmazonProject.Internet
 					requestStream.Close();
 			}
 		}
+
+		public override void ExecuteAsync (
+			Action<HttpWebRequestCallbackState> responseCallback, 
+			object state = null)
+		{
+			_ResponseCallback = responseCallback;
+			_State = state;
+
+			_Request = CreateHttpWebRequest(Url, Method, ContentType);
+
+			SetCredentialHeader ();
+
+			if ((Method.Equals ("POST") || Method.Equals ("PUT") || Method.Equals ("DELETE")) && PostParameters != null) {
+				byte[] requestBytes = GetRequestBytes (PostParameters);
+				_Request.ContentLength = requestBytes.Length;
+
+				_Request.BeginGetRequestStream (BeginGetRequestStreamCallback,
+					new HttpWebRequestAsyncState () {
+						RequestBytes = requestBytes,
+						HttpWebRequest = _Request,
+						ResponseCallback = responseCallback,  
+						State = state
+					}
+				);
+			} else {
+				_Request.BeginGetResponse(BeginGetResponseCallback,
+					new HttpWebRequestAsyncState()
+					{
+						HttpWebRequest = _Request,
+						ResponseCallback = responseCallback,
+						State = state
+					}
+				);
+			}
+		}
 	}
 }
 

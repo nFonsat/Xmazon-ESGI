@@ -38,20 +38,6 @@ namespace XmazonProject.Internet
 
 		public void OAuth2ClientCredentials ()
 		{
-			Action<HttpWebRequestCallbackState> responseCallback = callbackState => {
-				if (callbackState.Exception != null) {
-					WebException exception = callbackState.Exception;
-					HttpWebResponse webResponse = (HttpWebResponse)exception.Response;
-					DeleteToken (OAuthContext.AppContext);
-					Console.WriteLine ("OAuth2ClientCredentials Error : " + HttpXamarin.GetResponseText (webResponse.GetResponseStream()));
-				}
-				else {
-					string accessTokenAppJson = HttpXamarin.GetResponseText (callbackState.ResponseStream);
-					AccessToken token = JsonConvert.DeserializeObject<AccessToken>(accessTokenAppJson);
-					StorageToken (token, OAuthContext.AppContext);
-				}
-			};
-
 			NameValueCollection clientCredentialCollection = new NameValueCollection ();
 			clientCredentialCollection.Set ("grant_type", "client_credentials");
 			clientCredentialCollection.Set ("client_id", CLIENT_ID);
@@ -61,7 +47,19 @@ namespace XmazonProject.Internet
 				"POST", 
 				"application/x-www-form-urlencoded", 
 				clientCredentialCollection);
-			http.ExecuteAsync (responseCallback);
+			HttpWebResponse httpResponse = http.ExecuteSync ();
+
+			string responseString = HttpXamarin.GetResponseText (httpResponse.GetResponseStream ());
+
+			if (httpResponse.StatusCode == HttpStatusCode.OK) {
+					string accessTokenAppJson = responseString;
+				AccessToken token = JsonConvert.DeserializeObject<AccessToken>(accessTokenAppJson);
+				StorageToken (token, OAuthContext.AppContext);
+				Console.WriteLine ("OAuth2ClientCredentials : " + token.access_token);
+			} else {
+				DeleteToken (OAuthContext.AppContext);
+				Console.WriteLine ("OAuth2ClientCredentials Error : " + responseString);
+			}
 		}
 
 		public void OAuth2Password (string username, string password)
@@ -121,6 +119,23 @@ namespace XmazonProject.Internet
 
 
 			return token;
+		}
+
+		public bool ContainsAppAccessToken ()
+		{
+			bool istoken = Application.Current.Properties.ContainsKey (ACCESS_TOKEN_APP);
+			bool isRefresh = Application.Current.Properties.ContainsKey (ACCESS_TOKEN_APP);
+			
+			return istoken && isRefresh;
+		}
+
+		public Boolean ContainsUserAccessToken ()
+		{
+
+			bool istoken = Application.Current.Properties.ContainsKey (ACCESS_TOKEN_USER);
+			bool isRefresh = Application.Current.Properties.ContainsKey (REFRESH_TOKEN_USER);
+
+			return istoken && isRefresh;
 		}
 
 		private string GetRefreshToken (OAuthContext context)

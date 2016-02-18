@@ -6,7 +6,7 @@ namespace XmazonProject.Internet
 {
 	public partial class OAuthHttpXamarin : HttpXamarin
 	{
-		public virtual HttpWebResponse ExecuteSync ()
+		public override HttpWebResponse ExecuteSync ()
 		{
 			HttpWebResponse webResponse = null;
 			Stream requestStream = null;
@@ -33,7 +33,7 @@ namespace XmazonProject.Internet
 					AccessToken token = OAuth2Manager.Instance.OAuth2RefreshToken (Context);
 					if (token != null) {
 						SetCredentialHeader ();
-						webResponse = base.ExecuteAsync ();
+						webResponse = base.ExecuteSync ();
 					}
 				} else {
 					Console.WriteLine (GetResponseText (webResponse.GetResponseStream ()));

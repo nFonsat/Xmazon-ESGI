@@ -3,25 +3,29 @@
   <PropertyGroup>
     <MSBuildAllProjects>$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
     <HasSharedItems>true</HasSharedItems>
-    <SharedGUID>{557537FF-0303-454B-A95E-1A609315190E}</SharedGUID>
+    <SharedGUID>{EB661C49-9170-481F-9632-200F195DAF97}</SharedGUID>
   </PropertyGroup>
   <PropertyGroup Label="Configuration">
-    <Import_RootNamespace>Xmazon-Project</Import_RootNamespace>
+    <Import_RootNamespace>XmazonProject</Import_RootNamespace>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="$(MSBuildThisFileDirectory)Xmazon-Project.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)internet\HttpXamarin.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)internet\HttpXamarin.Async.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)XmazonProject.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)internet\AccessToken.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)internet\HttpWebRequestAsyncState.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)internet\HttpWebRequestCallbackState.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)internet\HttpXamarin.Async.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)internet\HttpXamarin.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)internet\HttpXamarin.Sync.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)internet\OAuth2Manager.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)internet\AccessToken.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)internet\OAuthHttpXamarin.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)internet\OAuthHttpXamarin.Async.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)internet\OAuthHttpXamarin.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)internet\OAuthHttpXamarin.Sync.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)webclients\AuthWebService.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)webclients\BaseWebService.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="$(MSBuildThisFileDirectory)internet\" />
+    <Folder Include="$(MSBuildThisFileDirectory)models\" />
+    <Folder Include="$(MSBuildThisFileDirectory)webclients\" />
   </ItemGroup>
 </Project>

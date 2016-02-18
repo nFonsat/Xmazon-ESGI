@@ -77,13 +77,10 @@ namespace XmazonProject.Internet
 			}
 		}
 
-		public void ExecuteAsync (
+		public virtual void ExecuteAsync (
 			Action<HttpWebRequestCallbackState> responseCallback, 
 			object state = null)
 		{
-			_ResponseCallback = responseCallback;
-			_State = state;
-			
 			_Request = CreateHttpWebRequest(Url, Method, ContentType);
 
 			if ((Method.Equals ("POST") || Method.Equals ("PUT") || Method.Equals ("DELETE")) && PostParameters != null) {
