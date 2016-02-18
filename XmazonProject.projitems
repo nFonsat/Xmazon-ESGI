@@ -22,10 +22,31 @@
     <Compile Include="$(MSBuildThisFileDirectory)internet\OAuthHttpXamarin.Sync.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)webclients\AuthWebService.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)webclients\BaseWebService.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)webclients\CartWebService.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)webclients\CategoryWebService.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)webclients\OrderWebService.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)webclients\ProductWebService.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)webclients\StoreWebService.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)webclients\UserWebService.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)pages\LoginPage.xaml.cs">
+      <DependentUpon>LoginPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)pages\HomePage.xaml.cs">
+      <DependentUpon>HomePage.xaml</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="$(MSBuildThisFileDirectory)internet\" />
     <Folder Include="$(MSBuildThisFileDirectory)models\" />
     <Folder Include="$(MSBuildThisFileDirectory)webclients\" />
+    <Folder Include="$(MSBuildThisFileDirectory)pages\" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)pages\LoginPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)pages\HomePage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
   </ItemGroup>
 </Project>
