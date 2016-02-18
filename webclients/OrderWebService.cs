@@ -33,8 +33,8 @@ namespace XmazonProject.WebService
 			Action<HttpWebRequestCallbackState> responseCallback)
 		{
 			NameValueCollection paramsCollection = new NameValueCollection ();
-			paramsCollection.Set ("limit", limit);
-			paramsCollection.Set ("offset", offset);
+			paramsCollection.Set ("limit", Convert.ToString(limit));
+			paramsCollection.Set ("offset", Convert.ToString(offset));
 
 			StringBuilder sb = new StringBuilder();
 

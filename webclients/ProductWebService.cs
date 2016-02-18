@@ -28,7 +28,7 @@ namespace XmazonProject.WebService
 		{
 			NameValueCollection cartCollection = new NameValueCollection ();
 			cartCollection.Set ("name", name);
-			cartCollection.Set ("price", price);
+			cartCollection.Set ("price", Convert.ToString(price));
 			cartCollection.Set ("category_uid", category_uid);
 
 			OAuthHttpXamarin http = new OAuthHttpXamarin (String.Format("{0}{1}", BaseUrl,  "/add"), 
@@ -47,8 +47,8 @@ namespace XmazonProject.WebService
 			NameValueCollection paramsCollection = new NameValueCollection ();
 			paramsCollection.Set ("category_uid", category_uid);
 			paramsCollection.Set ("search", search);
-			paramsCollection.Set ("limit", limit);
-			paramsCollection.Set ("offset", offset);
+			paramsCollection.Set ("limit", Convert.ToString(limit));
+			paramsCollection.Set ("offset", Convert.ToString(offset));
 
 			StringBuilder sb = new StringBuilder();
 

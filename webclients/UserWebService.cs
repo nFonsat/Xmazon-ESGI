@@ -23,8 +23,8 @@ namespace XmazonProject.WebService
 
 		public void GetUser (Action<HttpWebRequestCallbackState> responseCallback)
 		{
-			OAuthHttpXamarin http = new OAuthHttpXamarin (BaseUrl), 
-			"GET", "application/x-www-form-urlencoded", OAuthContext.UserWebService);
+			OAuthHttpXamarin http = new OAuthHttpXamarin (BaseUrl, 
+				"GET", "application/x-www-form-urlencoded", OAuthContext.UserContext);
 
 			http.ExecuteAsync (responseCallback);
 		}

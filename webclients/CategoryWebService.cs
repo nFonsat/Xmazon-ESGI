@@ -30,8 +30,8 @@ namespace XmazonProject.WebService
 			NameValueCollection paramsCollection = new NameValueCollection ();
 			paramsCollection.Set ("store_uid", store_uid);
 			paramsCollection.Set ("search", search);
-			paramsCollection.Set ("limit", limit);
-			paramsCollection.Set ("offset", offset);
+			paramsCollection.Set ("limit", Convert.ToString(limit));
+			paramsCollection.Set ("offset", Convert.ToString(offset));
 
 			StringBuilder sb = new StringBuilder();
 

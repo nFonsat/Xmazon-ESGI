@@ -26,7 +26,7 @@ namespace XmazonProject.WebService
 		{
 			NameValueCollection cartCollection = new NameValueCollection ();
 			cartCollection.Set ("product_uid", productUid);
-			cartCollection.Set ("quantity", quantity);
+			cartCollection.Set ("quantity", Convert.ToString(quantity));
 
 			OAuthHttpXamarin http = new OAuthHttpXamarin (String.Format("{0}{1}", BaseUrl,  "/add"), 
 				"PUT", "application/x-www-form-urlencoded", 
@@ -41,7 +41,7 @@ namespace XmazonProject.WebService
 		{
 			NameValueCollection cartCollection = new NameValueCollection ();
 			cartCollection.Set ("product_uid", productUid);
-			cartCollection.Set ("quantity", quantity);
+			cartCollection.Set ("quantity", Convert.ToString(quantity));
 
 			OAuthHttpXamarin http = new OAuthHttpXamarin (String.Format("{0}{1}", BaseUrl,  "/remove"), 
 				"DELETE", "application/x-www-form-urlencoded", 
