@@ -56,6 +56,7 @@ namespace XmazonProject.Internet
 				string accessTokenAppJson = responseString;
 				token = JsonConvert.DeserializeObject<AccessToken>(accessTokenAppJson);
 				StorageToken (token, OAuthContext.AppContext);
+				Console.WriteLine ("OAuth2ClientCredentials : " + token);
 			} else {
 				DeleteToken (OAuthContext.AppContext);
 				Console.WriteLine ("OAuth2ClientCredentials Error : " + responseString);

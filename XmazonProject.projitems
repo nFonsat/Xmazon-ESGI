@@ -10,7 +10,6 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="$(MSBuildThisFileDirectory)XmazonProject.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)internet\AccessToken.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)internet\HttpWebRequestAsyncState.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)internet\HttpWebRequestCallbackState.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)internet\HttpXamarin.Async.cs" />
@@ -34,6 +33,8 @@
     <Compile Include="$(MSBuildThisFileDirectory)pages\HomePage.xaml.cs">
       <DependentUpon>HomePage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)models\User.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)models\AccessToken.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="$(MSBuildThisFileDirectory)internet\" />
