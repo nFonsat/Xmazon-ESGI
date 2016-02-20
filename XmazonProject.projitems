@@ -15,7 +15,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)internet\HttpXamarin.Async.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)internet\HttpXamarin.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)internet\HttpXamarin.Sync.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)internet\OAuth2Manager.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)internet\OAuthHttpXamarin.Async.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)internet\OAuthHttpXamarin.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)internet\OAuthHttpXamarin.Sync.cs" />
@@ -35,12 +34,15 @@
     </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)models\User.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)models\AccessToken.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)managers\TokenManager.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)webclients\OAuth2WebService.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="$(MSBuildThisFileDirectory)internet\" />
     <Folder Include="$(MSBuildThisFileDirectory)models\" />
     <Folder Include="$(MSBuildThisFileDirectory)webclients\" />
     <Folder Include="$(MSBuildThisFileDirectory)pages\" />
+    <Folder Include="$(MSBuildThisFileDirectory)managers\" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="$(MSBuildThisFileDirectory)pages\LoginPage.xaml">

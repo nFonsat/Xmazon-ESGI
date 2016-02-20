@@ -9,6 +9,7 @@ namespace XmazonProject
 	{
 		public HomePage ()
 		{
+			Title = "Home";
 			InitializeComponent ();
 		}
 	}

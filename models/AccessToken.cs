@@ -1,5 +1,6 @@
 ﻿using System;
-namespace XmazonProject.Internet
+
+namespace XmazonProject.Models
 {
 	public class AccessToken
 	{

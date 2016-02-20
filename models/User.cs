@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace XmazonProject
+namespace XmazonProject.Models
 {
 	public class User
 	{

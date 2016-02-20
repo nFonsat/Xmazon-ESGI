@@ -4,6 +4,7 @@ using Xamarin.Forms;
 using XmazonProject.Internet;
 using XmazonProject.WebService;
 using System.Net;
+using XmazonProject.Manager;
 
 namespace XmazonProject
 {
@@ -11,9 +12,9 @@ namespace XmazonProject
 	{
 		public App ()
 		{
-			OAuth2Manager manager = OAuth2Manager.Instance;
+			TokenManager manager = TokenManager.Instance;
 			if (!manager.ContainsAppAccessToken ()) {
-				manager.OAuth2ClientCredentials ();
+				OAuth2Manager.Instance.OAuth2ClientCredentials ();
 			}
 
 			if (!manager.ContainsUserAccessToken ()) {

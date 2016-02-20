@@ -1,7 +1,9 @@
 ﻿using System;
-using System.Net;
-using Xamarin.Forms;
+using XmazonProject.WebService;
 using System.Collections.Specialized;
+using System.Net;
+using XmazonProject.Manager;
+using Xamarin.Forms;
 
 namespace XmazonProject.Internet
 {
@@ -31,13 +33,13 @@ namespace XmazonProject.Internet
 			
 			switch (Context) {
 			case OAuthContext.AppContext:
-				accessToken = (string) Application.Current.Properties [OAuth2Manager.ACCESS_TOKEN_APP];
+				accessToken = (string) Application.Current.Properties [TokenManager.ACCESS_TOKEN_APP];
 				credential = string.Format("{0} {1}", "Bearer", accessToken);
 				_Request.Headers[HttpRequestHeader.Authorization] = credential;
 				break;
 
 			case OAuthContext.UserContext:
-				accessToken = (string) Application.Current.Properties [OAuth2Manager.ACCESS_TOKEN_USER];
+				accessToken = (string) Application.Current.Properties [TokenManager.ACCESS_TOKEN_USER];
 				credential = string.Format("{0} {1}", "Bearer", accessToken);
 				_Request.Headers[HttpRequestHeader.Authorization] = credential;
 				break;

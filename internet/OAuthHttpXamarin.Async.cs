@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Net;
 using System.IO;
+using XmazonProject.Models;
+using XmazonProject.WebService;
 
 
 namespace XmazonProject.Internet
