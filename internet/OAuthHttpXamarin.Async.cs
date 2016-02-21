@@ -31,6 +31,7 @@ namespace XmazonProject.Internet
 			catch (WebException ex)
 			{
 				HttpWebResponse response = (HttpWebResponse)ex.Response;
+				Console.WriteLine (GetResponseText (response.GetResponseStream ()));
 				if (response.StatusCode == HttpStatusCode.Unauthorized) {
 					AccessToken token = OAuth2Manager.Instance.OAuth2RefreshToken (Context);
 					if (token != null) {
@@ -38,7 +39,6 @@ namespace XmazonProject.Internet
 						base.ExecuteAsync (_ResponseCallback, _State);
 					}
 				} else {
-					Console.WriteLine (GetResponseText (response.GetResponseStream ()));
 					throw ex;
 				}
 			}

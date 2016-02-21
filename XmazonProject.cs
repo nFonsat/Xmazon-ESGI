@@ -17,27 +17,11 @@ namespace XmazonProject
 				OAuth2Manager.Instance.OAuth2ClientCredentials ();
 			}
 
-			if (!manager.ContainsUserAccessToken ()) {
-				MainPage = new NavigationPage (new LoginPage ());
-			} 
-			else {
-				UserWebService.Instance.GetUser (callbackState => {
-					if (callbackState.Exception != null) {
-						WebException exception = callbackState.Exception;
-						HttpWebResponse webResponse = (HttpWebResponse)exception.Response;
-						Console.WriteLine (webResponse.StatusCode);
-						Console.WriteLine ("GetUser Error : " + HttpXamarin.GetResponseText (webResponse.GetResponseStream ()));
-						MainPage = new NavigationPage (new LoginPage ());
-					} else {
-						MainPage = new NavigationPage (new HomePage ());
-					}
-				});
-			}
+			MainPage = new NavigationPage (new LoginPage ());
 		}
 
 		protected override void OnStart ()
 		{
-			// Handle when your app starts
 		}
 
 		protected override void OnSleep ()

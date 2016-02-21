@@ -98,9 +98,17 @@ namespace XmazonProject.WebService
 					refreshTokenCollection);
 				HttpWebResponse webResponse = http.ExecuteSync ();
 
-				string accessTokenJson = HttpXamarin.GetResponseText (webResponse.GetResponseStream ());
-				token = JsonConvert.DeserializeObject<AccessToken>(accessTokenJson);
-				tokenManager.StorageToken (token, OAuthContext.AppContext);
+				string responseString = HttpXamarin.GetResponseText (webResponse.GetResponseStream ());
+
+				Console.WriteLine ("OAuth2RefreshToken : " + responseString);
+
+				if (webResponse.StatusCode == HttpStatusCode.OK) {
+					token = JsonConvert.DeserializeObject<AccessToken>(responseString);
+					tokenManager.StorageToken (token, context);
+					Console.WriteLine ("OAuth2RefreshToken : " + token);
+				} else {
+					tokenManager.DeleteToken (context);
+				}
 			}
 
 			return token;

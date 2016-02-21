@@ -30,17 +30,22 @@ namespace XmazonProject.Manager
 
 		public bool ContainsAppAccessToken ()
 		{
-			bool istoken = Application.Current.Properties.ContainsKey (ACCESS_TOKEN_APP);
-			bool isRefresh = Application.Current.Properties.ContainsKey (ACCESS_TOKEN_APP);
+			bool isToken = App.Current.Properties.ContainsKey (ACCESS_TOKEN_APP) && 
+				App.Current.Properties [ACCESS_TOKEN_APP] != null;
+			bool isRefresh = App.Current.Properties.ContainsKey (REFRESH_TOKEN_APP) && 
+				App.Current.Properties [REFRESH_TOKEN_APP] != null;
 
-			return istoken && isRefresh;
+			return isToken && isRefresh;
 		}
 
 		public bool ContainsUserAccessToken ()
 		{
 
-			bool istoken = Application.Current.Properties.ContainsKey (ACCESS_TOKEN_USER);
-			bool isRefresh = Application.Current.Properties.ContainsKey (REFRESH_TOKEN_USER);
+			bool istoken = App.Current.Properties.ContainsKey (ACCESS_TOKEN_USER) && 
+				App.Current.Properties [ACCESS_TOKEN_USER] != null;
+			
+			bool isRefresh = App.Current.Properties.ContainsKey (REFRESH_TOKEN_USER)&& 
+				App.Current.Properties [REFRESH_TOKEN_USER] != null;
 
 			return istoken && isRefresh;
 		}
@@ -51,13 +56,13 @@ namespace XmazonProject.Manager
 
 			switch (context) {
 			case OAuthContext.AppContext:
-				refreshToken = (Application.Current.Properties.ContainsKey (REFRESH_TOKEN_APP)) ?
-					(string) Application.Current.Properties [REFRESH_TOKEN_APP] : null;
+				refreshToken = (App.Current.Properties.ContainsKey (REFRESH_TOKEN_APP)) ?
+					(string) App.Current.Properties [REFRESH_TOKEN_APP] : null;
 				break;
 
 			case OAuthContext.UserContext:
-				refreshToken = (Application.Current.Properties.ContainsKey (REFRESH_TOKEN_USER)) ?
-					(string) Application.Current.Properties [REFRESH_TOKEN_USER] : null;
+				refreshToken = (App.Current.Properties.ContainsKey (REFRESH_TOKEN_USER)) ?
+					(string) App.Current.Properties [REFRESH_TOKEN_USER] : null;
 				break;
 			}
 
@@ -68,15 +73,15 @@ namespace XmazonProject.Manager
 		{
 			switch (context) {
 			case OAuthContext.AppContext:
-				Application.Current.Properties [ACCESS_TOKEN_APP] = token.access_token;
-				Application.Current.Properties [REFRESH_TOKEN_APP] = token.refresh_token;
-				Application.Current.SavePropertiesAsync ();
+				App.Current.Properties [ACCESS_TOKEN_APP] = token.access_token;
+				App.Current.Properties [REFRESH_TOKEN_APP] = token.refresh_token;
+				App.Current.SavePropertiesAsync ();
 				break;
 
 			case OAuthContext.UserContext:
-				Application.Current.Properties [ACCESS_TOKEN_USER] = token.access_token;
-				Application.Current.Properties [REFRESH_TOKEN_USER] = token.refresh_token;
-				Application.Current.SavePropertiesAsync ();
+				App.Current.Properties [ACCESS_TOKEN_USER] = token.access_token;
+				App.Current.Properties [REFRESH_TOKEN_USER] = token.refresh_token;
+				App.Current.SavePropertiesAsync ();
 				break;
 			}
 
@@ -87,15 +92,15 @@ namespace XmazonProject.Manager
 		{
 			switch (context) {
 			case OAuthContext.AppContext:
-				Application.Current.Properties.Remove (ACCESS_TOKEN_APP);
-				Application.Current.Properties.Remove (REFRESH_TOKEN_APP);
-				Application.Current.SavePropertiesAsync ();
+				App.Current.Properties.Remove (ACCESS_TOKEN_APP);
+				App.Current.Properties.Remove (REFRESH_TOKEN_APP);
+				App.Current.SavePropertiesAsync ();
 				break;
 
 			case OAuthContext.UserContext:
-				Application.Current.Properties.Remove (ACCESS_TOKEN_USER);
-				Application.Current.Properties.Remove (REFRESH_TOKEN_USER);
-				Application.Current.SavePropertiesAsync ();
+				App.Current.Properties.Remove (ACCESS_TOKEN_USER);
+				App.Current.Properties.Remove (REFRESH_TOKEN_USER);
+				App.Current.SavePropertiesAsync ();
 				break;
 			}
 		}
