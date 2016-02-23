@@ -8,10 +8,13 @@ namespace XmazonProject.Internet
 {
 	public partial class OAuthHttpXamarin : HttpXamarin
 	{
-		public override HttpWebResponse ExecuteSync ()
+		public virtual HttpWebResponse ExecuteSync (bool useRefreshToken = true)
 		{
+			_UseRefreshToken = useRefreshToken;
 			HttpWebResponse webResponse = null;
 			Stream requestStream = null;
+
+			SetCredentialHeader ();
 
 			_Request = CreateHttpWebRequest(Url, Method, ContentType);
 
@@ -31,11 +34,11 @@ namespace XmazonProject.Internet
 			catch (WebException exception) 
 			{
 				webResponse = (HttpWebResponse)exception.Response;
-				if (webResponse.StatusCode == HttpStatusCode.Unauthorized) {
+				if (webResponse.StatusCode == HttpStatusCode.Unauthorized && _UseRefreshToken) {
 					AccessToken token = OAuth2Manager.Instance.OAuth2RefreshToken (Context);
 					if (token != null) {
 						SetCredentialHeader ();
-						webResponse = base.ExecuteSync ();
+						webResponse = ExecuteSync (false);
 					}
 				} else {
 					Console.WriteLine (GetResponseText (webResponse.GetResponseStream ()));

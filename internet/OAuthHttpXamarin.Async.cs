@@ -32,11 +32,11 @@ namespace XmazonProject.Internet
 			{
 				HttpWebResponse response = (HttpWebResponse)ex.Response;
 				Console.WriteLine (GetResponseText (response.GetResponseStream ()));
-				if (response.StatusCode == HttpStatusCode.Unauthorized) {
+				if (response.StatusCode == HttpStatusCode.Unauthorized && _UseRefreshToken) {
 					AccessToken token = OAuth2Manager.Instance.OAuth2RefreshToken (Context);
 					if (token != null) {
 						SetCredentialHeader ();
-						base.ExecuteAsync (_ResponseCallback, _State);
+						ExecuteAsync (_ResponseCallback, false, _State);
 					}
 				} else {
 					throw ex;
@@ -72,11 +72,11 @@ namespace XmazonProject.Internet
 			catch (WebException ex)
 			{
 				HttpWebResponse response = (HttpWebResponse)ex.Response;
-				if (response.StatusCode == HttpStatusCode.Unauthorized) {
+				if (response.StatusCode == HttpStatusCode.Unauthorized && _UseRefreshToken) {
 					AccessToken token = OAuth2Manager.Instance.OAuth2RefreshToken (Context);
 					if (token != null) {
 						SetCredentialHeader ();
-						base.ExecuteAsync (_ResponseCallback, _State);
+						ExecuteAsync (_ResponseCallback, false, _State);
 					}
 				} else {
 					Console.WriteLine (GetResponseText (response.GetResponseStream ()));
@@ -90,10 +90,12 @@ namespace XmazonProject.Internet
 			}
 		}
 
-		public override void ExecuteAsync (
-			Action<HttpWebRequestCallbackState> responseCallback, 
+		public virtual void ExecuteAsync (
+			Action<HttpWebRequestCallbackState> responseCallback,
+			bool useRefreshToken = true,
 			object state = null)
 		{
+			_UseRefreshToken = useRefreshToken;
 			_ResponseCallback = responseCallback;
 			_State = state;
 

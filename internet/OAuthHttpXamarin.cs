@@ -10,6 +10,8 @@ namespace XmazonProject.Internet
 	public partial class OAuthHttpXamarin : HttpXamarin
 	{
 		public OAuthContext Context  { get; private set; }
+
+		private bool _UseRefreshToken;
 		
 		public OAuthHttpXamarin (string url, string httpMethod, OAuthContext context) : base(url, httpMethod)
 		{
