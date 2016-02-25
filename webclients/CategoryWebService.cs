@@ -22,16 +22,16 @@ namespace XmazonProject.WebService
 		}
 			
 		public void GetList (string store_uid,
-			string search,
-			int limit,
-			int offset,
-			Action<HttpWebRequestCallbackState> responseCallback)
+			Action<HttpWebRequestCallbackState> responseCallback/*, 
+			string search = null,
+			int limit = 100,
+			int offset = 100*/)
 		{
 			NameValueCollection paramsCollection = new NameValueCollection ();
 			paramsCollection.Set ("store_uid", store_uid);
-			paramsCollection.Set ("search", search);
-			paramsCollection.Set ("limit", Convert.ToString(limit));
-			paramsCollection.Set ("offset", Convert.ToString(offset));
+//			paramsCollection.Set ("search", search);
+//			paramsCollection.Set ("limit", Convert.ToString(limit));
+//			paramsCollection.Set ("offset", Convert.ToString(offset));
 
 			StringBuilder sb = new StringBuilder();
 

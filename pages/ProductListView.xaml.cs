@@ -15,7 +15,7 @@ namespace XmazonProject
 			Category myCat = new Category ("az", "az");
 
 			// Define some data.
-			List<Product> products = Category.getNextProducts(myCat.uid, 15, 0);
+			List<Product> products = null;
 
 			// Create the ListView.
 			ListView listView = new ListView
