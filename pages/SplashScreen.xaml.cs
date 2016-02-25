@@ -9,7 +9,7 @@ using XmazonProject.Internet;
 
 namespace XmazonProject
 {
-	public partial class SplashScreen : BaseContentPage
+	public partial class SplashScreen : ContentPage
 	{
 		public SplashScreen ()
 		{
@@ -17,9 +17,7 @@ namespace XmazonProject
 			if (manager.ContainsUserAccessToken ()) {
 				UserWebService.Instance.GetUser (callbackState => {
 					if (callbackState.Exception != null) {
-						WebException exception = callbackState.Exception;
-						HttpWebResponse webResponse = (HttpWebResponse)exception.Response;
-						Console.WriteLine ("GetUser Error : " + HttpXamarin.GetResponseText (webResponse.GetResponseStream ()));
+						goToLoginPage ();
 					} 
 					else {
 						goToHomePage ();
@@ -37,14 +35,19 @@ namespace XmazonProject
 			});
 		}
 
-		private void goToHomePage ()
+		private void goToLoginPage ()
 		{
 			Device.BeginInvokeOnMainThread(() =>  {
-				ReplaceRootAsync (new HomePage ());
+				ReplaceRootAsync (new LoginPage ());
 			});
 		}
-
-		private void laun
+			
+		private void ReplaceRootAsync(Page page)
+		{
+			NavigationPage navigation = new NavigationPage(page);
+			App.Current.MainPage = navigation;
+			this.Navigation.PopToRootAsync();
+		}
 	}
 }
 

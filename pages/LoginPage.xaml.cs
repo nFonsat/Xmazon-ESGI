@@ -1,18 +1,15 @@
 ﻿using System;
-using System.Collections.Generic;
-
 using Xamarin.Forms;
-using XmazonProject.Internet;
-using System.Net;
-using Newtonsoft.Json;
-using XmazonProject.WebService;
-using XmazonProject.Models;
 using XmazonProject.Manager;
-using System.Threading.Tasks;
+using XmazonProject.Internet;
+using XmazonProject.Models;
+using XmazonProject.WebService;
+using Newtonsoft.Json;
+using System.Net;
 
 namespace XmazonProject
 {
-	public partial class LoginPage : BaseContentPage
+	public partial class LoginPage : ContentPage
 	{
 		private TokenManager tokenManager = TokenManager.Instance;
 
@@ -20,6 +17,10 @@ namespace XmazonProject
 		{
 			Title = "Sign in";
 			InitializeComponent ();
+		}
+
+		void SubscribeAction(object sender, EventArgs ea){
+			goToSubscribe ();
 		}
 
 		void SignInAction(object sender, EventArgs ea)
@@ -49,6 +50,20 @@ namespace XmazonProject
 			Device.BeginInvokeOnMainThread(() =>  {
 				ReplaceRootAsync (new HomePage ());
 			});
+		}
+
+		private void goToSubscribe ()
+		{
+			Device.BeginInvokeOnMainThread(() =>  {
+				ReplaceRootAsync (new SubscribePage ());
+			});
+		}
+			
+		private void ReplaceRootAsync(Page page)
+		{
+			NavigationPage navigation = new NavigationPage(page);
+			App.Current.MainPage = navigation;
+			this.Navigation.PopToRootAsync();
 		}
 	}
 }
