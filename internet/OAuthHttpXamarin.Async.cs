@@ -3,6 +3,7 @@ using System.Net;
 using System.IO;
 using XmazonProject.Models;
 using XmazonProject.WebService;
+using Xamarin.Forms;
 
 
 namespace XmazonProject.Internet
@@ -44,7 +45,12 @@ namespace XmazonProject.Internet
 					else {
 						throw;
 					}
-				} 
+				}
+				else if (response.StatusCode == HttpStatusCode.Unauthorized && !_UseRefreshToken) {
+					Device.BeginInvokeOnMainThread(() =>  {
+						App.Current.MainPage = new NavigationPage (new SplashScreen ());
+					});
+				}
 				else if (asyncState != null) {
 					asyncState.ResponseCallback (new HttpWebRequestCallbackState (ex));
 				} 

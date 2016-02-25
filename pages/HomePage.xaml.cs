@@ -17,25 +17,40 @@ namespace XmazonProject
 	{
 		public HomePage ()
 		{
-			Title = "Home";		
+			Title = "Home";
 
-			gotoStoreList ();
 			InitializeComponent ();
+		}
+
+		void StoreAction(object sender, EventArgs ea){
+			gotoStoreList ();
+		}
+
+		void logoutAction(object sender, EventArgs ea){
+			TokenManager.Instance.DeleteToken (OAuthContext.AppContext);
+			TokenManager.Instance.DeleteToken (OAuthContext.UserContext);
+			goToLoginPage ();
+		}
+
+		void gotoStoreList ()
+		{
+			Device.BeginInvokeOnMainThread(() =>  {
+				this.Navigation.PushAsync(new StoreListView ());
+			});
 		}
 
 		private void goToLoginPage ()
 		{
 			Device.BeginInvokeOnMainThread(() =>  {
-				this.Navigation.PushAsync(new LoginPage ());
+				ReplaceRootAsync (new LoginPage ());
 			});
 		}
 
-
-		private void gotoStoreList ()
+		private void ReplaceRootAsync(Page page)
 		{
-			Device.BeginInvokeOnMainThread(() =>  {
-				this.Navigation.PushAsync(new StoreListView ());
-			});
+			NavigationPage navigation = new NavigationPage(page);
+			App.Current.MainPage = navigation;
+			this.Navigation.PopToRootAsync();
 		}
 	}
 }
