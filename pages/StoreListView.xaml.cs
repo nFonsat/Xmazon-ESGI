@@ -39,7 +39,7 @@ namespace XmazonProject
 							if (e.SelectedItem == null) {
 								return;
 							}
-
+							
 							goToCategoryListView();
 						};
 					}
