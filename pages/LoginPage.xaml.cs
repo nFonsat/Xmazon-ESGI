@@ -36,6 +36,10 @@ namespace XmazonProject
 			InitializeComponent ();
 		}
 
+		void SubscribeAction(object sender, EventArgs ea){
+
+		}
+
 		void SignInAction(object sender, EventArgs ea)
 		{
 			string username = this.username.Text;
@@ -62,6 +66,13 @@ namespace XmazonProject
 		{
 			Device.BeginInvokeOnMainThread(() =>  {
 				ReplaceRootAsync (new HomePage ());
+			});
+		}
+
+		private void goToSubscribe ()
+		{
+			Device.BeginInvokeOnMainThread(() =>  {
+				ReplaceRootAsync (new SubscribePage ());
 			});
 		}
 

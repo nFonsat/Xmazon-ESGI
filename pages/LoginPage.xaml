@@ -16,6 +16,11 @@
 				Text="Sign in"
 				/>
 
+			<Button
+				Clicked="SubscribeAction"
+				Text="Subscribe"
+				/>
+
 	    </StackLayout>
 	</ContentPage.Content>
 </ContentPage>
