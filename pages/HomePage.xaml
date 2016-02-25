@@ -11,6 +11,11 @@
 				Clicked="StoreAction"
 				Text="Afficher les boutiques"
 				/>
+
+			<Button
+				Clicked="logoutAction"
+				Text="Deconnexion"
+				/>
 		</StackLayout>
 	</ContentPage.Content>
 </ContentPage>
