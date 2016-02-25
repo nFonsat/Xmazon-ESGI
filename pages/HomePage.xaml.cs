@@ -17,21 +17,16 @@ namespace XmazonProject
 	{
 		public HomePage ()
 		{
-			Title = "Home";		
+			Title = "Home";
 
-			gotoStoreList ();
 			InitializeComponent ();
 		}
 
-		private void goToLoginPage ()
-		{
-			Device.BeginInvokeOnMainThread(() =>  {
-				this.Navigation.PushAsync(new LoginPage ());
-			});
+		void StoreAction(object sender, EventArgs ea){
+			gotoStoreList ();
 		}
 
-
-		private void gotoStoreList ()
+		void gotoStoreList ()
 		{
 			Device.BeginInvokeOnMainThread(() =>  {
 				this.Navigation.PushAsync(new StoreListView ());
