@@ -59,6 +59,7 @@
       <DependentUpon>SplashScreen.xaml</DependentUpon>
     </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)models\CategoryResponse.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)models\ProductResponse.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="$(MSBuildThisFileDirectory)internet\" />
