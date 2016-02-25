@@ -14,17 +14,6 @@ namespace XmazonProject
 
 		public ProductListView ()
 		{
-			ProductWebService.Instance.GetList (callbackState => {
-				if (callbackState.Exception != null) {
-					WebException exception = callbackState.Exception;
-					HttpWebResponse webResponse = (HttpWebResponse)exception.Response;
-					Console.WriteLine (HttpXamarin.GetResponseText (webResponse.GetResponseStream ()));
-				}
-				else {
-					Console.WriteLine (HttpXamarin.GetResponseText (callbackState.ResponseStream));
-				}
-			});
-			
 			initComponent ();
 		}
 
@@ -36,10 +25,10 @@ namespace XmazonProject
 				if (callbackState.Exception != null) {
 					WebException exception = callbackState.Exception;
 					HttpWebResponse webResponse = (HttpWebResponse)exception.Response;
-					Console.WriteLine (webResponse.GetResponseStream ());
+					Console.WriteLine (HttpXamarin.GetResponseText (webResponse.GetResponseStream ()));
 				}
 				else {
-					Console.WriteLine (callbackState.ResponseStream);
+					Console.WriteLine (HttpXamarin.GetResponseText (callbackState.ResponseStream));
 				}
 			}, myCategory.uid);
 			

@@ -38,17 +38,29 @@ namespace XmazonProject.WebService
 			http.ExecuteAsync (responseCallback);
 		}
 
-		public void GetList (string category_uid,
-			string search,
-			int limit,
-			int offset,
-			Action<HttpWebRequestCallbackState> responseCallback)
+		public void GetList (Action<HttpWebRequestCallbackState> responseCallback,
+			string category_uid = null,
+			string search = null,
+			int limit = -1,
+			int offset = -1
+			)
 		{
 			NameValueCollection paramsCollection = new NameValueCollection ();
-			paramsCollection.Set ("category_uid", category_uid);
-			paramsCollection.Set ("search", search);
-			paramsCollection.Set ("limit", Convert.ToString(limit));
-			paramsCollection.Set ("offset", Convert.ToString(offset));
+			if (category_uid != null) {
+				paramsCollection.Set ("category_uid", category_uid);
+			}
+
+			if (search != null) {
+				paramsCollection.Set ("search", search);
+			}
+
+			if (limit > 0) {
+				paramsCollection.Set ("limit", Convert.ToString(limit));
+			}
+
+			if (offset > 0) {
+				paramsCollection.Set ("offset", Convert.ToString(offset));
+			}
 
 			StringBuilder sb = new StringBuilder();
 
@@ -59,7 +71,10 @@ namespace XmazonProject.WebService
 				}
 			}
 
-			sb.Length -= 1; 
+			if (sb.Length > 0) {
+				sb.Length -= 1;
+			}
+
 			string url = String.Format ("{0}{1}?{2}", BaseUrl, "/list", sb.ToString());
 
 			OAuthHttpXamarin http = new OAuthHttpXamarin (url, "GET", 

@@ -39,8 +39,9 @@ namespace XmazonProject
 							if (e.SelectedItem == null) {
 								return;
 							}
-							
-							goToCategoryListView();
+							Store monStore = e.SelectedItem as Store;
+
+							goToCategoryListView(monStore);
 						};
 					}
 					else{
@@ -53,10 +54,10 @@ namespace XmazonProject
 		}
 
 
-		public void goToCategoryListView()
+		public void goToCategoryListView(Store monStore)
 		{
 			Device.BeginInvokeOnMainThread(() =>  {
-				this.Navigation.PushAsync (new CategoryListView());
+				this.Navigation.PushAsync (new CategoryListView(monStore));
 			});
 		}
 	}

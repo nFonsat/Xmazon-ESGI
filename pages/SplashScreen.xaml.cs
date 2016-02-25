@@ -15,14 +15,17 @@ namespace XmazonProject
 		{
 			TokenManager manager = TokenManager.Instance;
 			if (manager.ContainsUserAccessToken ()) {
-				UserWebService.Instance.GetUser (callbackState => {
+				
+				ProductWebService.Instance.GetList (callbackState => {
 					if (callbackState.Exception != null) {
 						goToLoginPage ();
-					} 
-					else {
+					} else {
 						goToHomePage ();
 					}
 				});
+			}
+			else {
+				goToLoginPage ();
 			}
 			
 			InitializeComponent ();
