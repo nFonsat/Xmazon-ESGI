@@ -37,7 +37,7 @@ namespace XmazonProject
 		}
 
 		void SubscribeAction(object sender, EventArgs ea){
-
+			goToSubscribe ();
 		}
 
 		void SignInAction(object sender, EventArgs ea)
