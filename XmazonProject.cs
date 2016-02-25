@@ -17,7 +17,7 @@ namespace XmazonProject
 				OAuth2Manager.Instance.OAuth2ClientCredentials ();
 			}
 
-			MainPage = new NavigationPage (new LoginPage ());
+			MainPage = new NavigationPage (new SplashScreen ());
 		}
 
 		protected override void OnStart ()

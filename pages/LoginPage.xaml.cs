@@ -12,26 +12,12 @@ using System.Threading.Tasks;
 
 namespace XmazonProject
 {
-	public partial class LoginPage : ContentPage
+	public partial class LoginPage : BaseContentPage
 	{
 		private TokenManager tokenManager = TokenManager.Instance;
 
 		public LoginPage ()
 		{
-			TokenManager manager = TokenManager.Instance;
-			if (manager.ContainsUserAccessToken ()) {
-				UserWebService.Instance.GetUser (callbackState => {
-					if (callbackState.Exception != null) {
-						WebException exception = callbackState.Exception;
-						HttpWebResponse webResponse = (HttpWebResponse)exception.Response;
-						Console.WriteLine ("GetUser Error : " + HttpXamarin.GetResponseText (webResponse.GetResponseStream ()));
-					} 
-					else {
-						goToHomePage ();
-					}
-				});
-			}
-			
 			Title = "Sign in";
 			InitializeComponent ();
 		}
@@ -63,13 +49,6 @@ namespace XmazonProject
 			Device.BeginInvokeOnMainThread(() =>  {
 				ReplaceRootAsync (new HomePage ());
 			});
-		}
-
-		private void ReplaceRootAsync(Page page)
-		{
-			NavigationPage navigation = new NavigationPage(page);
-			App.Current.MainPage = navigation;
-			this.Navigation.PopToRootAsync();
 		}
 	}
 }

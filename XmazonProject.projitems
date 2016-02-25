@@ -55,6 +55,10 @@
     <Compile Include="$(MSBuildThisFileDirectory)models\StoreResponse.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)managers\TokenManager.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)webclients\OAuth2WebService.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)pages\SplashScreen.xaml.cs">
+      <DependentUpon>SplashScreen.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)pages\BaseContentPage.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="$(MSBuildThisFileDirectory)internet\" />
@@ -83,6 +87,9 @@
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Include="$(MSBuildThisFileDirectory)pages\SubscribePage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)pages\SplashScreen.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
   </ItemGroup>
