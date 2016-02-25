@@ -37,9 +37,19 @@ namespace XmazonProject.Internet
 					if (token != null) {
 						SetCredentialHeader ();
 						ExecuteAsync (_ResponseCallback, false, _State);
+					} 
+					else if (asyncState != null) {
+						asyncState.ResponseCallback (new HttpWebRequestCallbackState (ex));
+					} 
+					else {
+						throw;
 					}
-				} else {
-					throw ex;
+				} 
+				else if (asyncState != null) {
+					asyncState.ResponseCallback (new HttpWebRequestCallbackState (ex));
+				} 
+				else {
+					throw;
 				}
 			}
 			finally
@@ -72,15 +82,25 @@ namespace XmazonProject.Internet
 			catch (WebException ex)
 			{
 				HttpWebResponse response = (HttpWebResponse)ex.Response;
+				Console.WriteLine (GetResponseText (response.GetResponseStream ()));
 				if (response.StatusCode == HttpStatusCode.Unauthorized && _UseRefreshToken) {
 					AccessToken token = OAuth2Manager.Instance.OAuth2RefreshToken (Context);
 					if (token != null) {
 						SetCredentialHeader ();
 						ExecuteAsync (_ResponseCallback, false, _State);
+					} 
+					else if (asyncState != null) {
+						asyncState.ResponseCallback (new HttpWebRequestCallbackState (ex));
+					} 
+					else {
+						throw;
 					}
-				} else {
-					Console.WriteLine (GetResponseText (response.GetResponseStream ()));
-					throw ex;
+				} 
+				else if (asyncState != null) {
+					asyncState.ResponseCallback (new HttpWebRequestCallbackState (ex));
+				} 
+				else {
+					throw;
 				}
 			}
 			finally
