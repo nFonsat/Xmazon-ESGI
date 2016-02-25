@@ -35,6 +35,7 @@
     </Compile>
     <Compile Include="$(MSBuildThisFileDirectory)models\User.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)models\AccessToken.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)models\Product.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="$(MSBuildThisFileDirectory)internet\" />
