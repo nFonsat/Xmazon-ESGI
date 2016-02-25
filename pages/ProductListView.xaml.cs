@@ -1,10 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
-using XmazonProject.Models;
 using Xamarin.Forms;
-using XmazonProject.WebService;
-using System.Net;
 using XmazonProject.Internet;
+using System.Net;
+using Newtonsoft.Json;
+using XmazonProject.WebService;
+using XmazonProject.Models;
+using XmazonProject.Manager;
+using System.Json;
+
 
 namespace XmazonProject
 {
@@ -28,17 +32,42 @@ namespace XmazonProject
 					Console.WriteLine (HttpXamarin.GetResponseText (webResponse.GetResponseStream ()));
 				}
 				else {
-					Console.WriteLine (HttpXamarin.GetResponseText (callbackState.ResponseStream));
+					string jsonStr = HttpXamarin.GetResponseText (callbackState.ResponseStream);
+					ProductResponse mesProduits = JsonConvert.DeserializeObject<ProductResponse>(jsonStr);
+
+					if(mesProduits.code == 0){
+						Device.BeginInvokeOnMainThread(() =>  {
+							this.list.ItemsSource = mesProduits.result;
+						});
+
+						this.list.ItemSelected += (sender, e) => {
+							if (e.SelectedItem == null) {
+								return;
+							}
+
+							Product myPrd = e.SelectedItem as Product;
+							goToProductView(myPrd);
+						};
+					}
+					else{
+						Console.WriteLine ("Probleme inattendu");
+					}
 				}
 			}, myCategory.uid);
-			
+
 			initComponent ();
 		}
 
 		private void initComponent ()
 		{
-			Title = "Liste de produit";
+//			Title = "Liste de produit";
+			Title = myCategory.name;
 			InitializeComponent ();
+		}
+
+		private void goToProductView(Product myPrd){
+		
+		
 		}
 	}
 }
