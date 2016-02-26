@@ -4,10 +4,12 @@ namespace XmazonProject
 {
 	public class Product
 	{
-		public Product(String uid, String name)
+		public Product(String uid, String name, float price, bool available)
 		{
 			this.uid = uid;
 			this.name = name;
+			this.price = price;
+			this.available = available;
 		}
 
 		public String uid { private set; get; }

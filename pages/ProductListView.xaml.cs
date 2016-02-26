@@ -60,14 +60,15 @@ namespace XmazonProject
 
 		private void initComponent ()
 		{
-//			Title = "Liste de produit";
 			Title = myCategory.name;
 			InitializeComponent ();
 		}
 
-		private void goToProductView(Product myPrd){
-		
-		
+		private void goToProductView(Product myPrd)
+		{
+			Device.BeginInvokeOnMainThread(() =>  {
+				this.Navigation.PushAsync (new ProductView(myPrd));
+			});
 		}
 	}
 }
